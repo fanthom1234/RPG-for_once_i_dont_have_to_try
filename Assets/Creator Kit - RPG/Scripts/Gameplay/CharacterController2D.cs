@@ -60,8 +60,18 @@ namespace RPGM.Gameplay
         {
             if (animator)
             {
-                animator.SetInteger("WalkX", direction.x < 0 ? -1 : direction.x > 0 ? 1 : 0);
-                animator.SetInteger("WalkY", direction.y < 0 ? 1 : direction.y > 0 ? -1 : 0);
+                if (Math.Abs(direction.x) > Math.Abs(direction.y))
+                {
+                    animator.SetInteger("WalkY", 0);
+                    animator.SetInteger("WalkX", direction.x != 0 ? 1 : 0);
+                }
+ 
+                else
+                {
+                    animator.SetInteger("WalkX", 0);
+                    animator.SetInteger("WalkY", direction.y != 0 ? direction.y > 0 ? -1 : 1 : 0);
+                }
+             
             }
         }
 

@@ -9,7 +9,7 @@ namespace RPGM.UI
     /// </summary>
     public class InputController : MonoBehaviour
     {
-        public float stepSize = 0.1f;
+        public float stepSize = 10.5f;
         GameModel model = Schedule.GetModel<GameModel>();
 
         public enum State
@@ -49,16 +49,19 @@ namespace RPGM.UI
 
         void CharacterControl()
         {
+            Vector3 dir = Vector3.zero;
+
             if (Input.GetKey(KeyCode.UpArrow))
-                model.player.nextMoveCommand = Vector3.up * stepSize;
-            else if (Input.GetKey(KeyCode.DownArrow))
-                model.player.nextMoveCommand = Vector3.down * stepSize;
-            else if (Input.GetKey(KeyCode.LeftArrow))
-                model.player.nextMoveCommand = Vector3.left * stepSize;
-            else if (Input.GetKey(KeyCode.RightArrow))
-                model.player.nextMoveCommand = Vector3.right * stepSize;
-            else
-                model.player.nextMoveCommand = Vector3.zero;
+                dir += Vector3.up;
+            if (Input.GetKey(KeyCode.DownArrow))
+                dir += Vector3.down;
+            if (Input.GetKey(KeyCode.LeftArrow))
+                dir += Vector3.left;
+            if (Input.GetKey(KeyCode.RightArrow))
+                dir += Vector3.right;
+                
+            dir.Normalize();
+            model.player.nextMoveCommand = dir * stepSize;
         }
     }
 }
